@@ -25,8 +25,8 @@ jobs:
           npm init -y
           npm install hexo-seo-autopush
 
-      - name: 4. google 提交
-        run: npx hexoautopush ${{secrets.google_client_email}} ${{secrets.google_private_key}}
+      
+        
       
       - name: 5. bing 提交
         run: curl -X POST "https://ssl.bing.com/webmaster/api.svc/json/SubmitUrlBatch?apikey=${{secrets.bing_apikey}}" -H "Content-Type:application/json" -H "charset:utf-8" -d @bing.json
