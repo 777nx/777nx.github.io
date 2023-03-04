@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Vue.js调试神器vue-devtools的安装</title>
+      <link href="/posts/d5d70e72.html"/>
+      <url>/posts/d5d70e72.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、前言">一、前言</h2><p>在使用 Vue 时，官方推荐我们在浏览器上安装 Vue Devtools。它允许我们在一个更友好的界面中审查和调试 Vue 应用。</p><p><img src="https://img.777nx.cn/test/image-20230302174613276.png" alt="image-20230302174613276"></p><h2 id="二、教程">二、教程</h2><h3 id="下载">下载</h3><ul><li>vue.js插件下载：<a href="https://777nx.lanzoue.com/ib5lm0p1nn0d">https://777nx.lanzoue.com/ib5lm0p1nn0d</a></li></ul><h3 id="安装">安装</h3><ol><li><p>下载Vue.js devtools的crx文件后，打开Chrome的扩展页面（ <code>chrome://extensions/</code> 或按Chrome菜单图标&gt;更多工具&gt;扩展程序），然后拖放 crx文件到扩展页面安装它</p></li><li><p>点击“添加拓展程序”完成安装</p></li></ol><p><img src="https://img.777nx.cn/test/image-20230302180452899.png" alt="image-20230302180452899"></p><ol start="3"><li>完成安装点击详情，将允许访问文件网址打开</li></ol><p><img src="https://img.777nx.cn/test/image-20230302180656415.png" alt="image-20230302180656415"></p><p><img src="https://img.777nx.cn/test/image-20230302180725782.png" alt="image-20230302180725782"></p><h3 id="使用">使用</h3><p>安装完成之后运行你的vue开发项目，F12就可以看到这个vue-devtools插件了，可以快速调试了</p><p><img src="https://img.777nx.cn/test/image-20230302181129729.png" alt="image-20230302181129729"></p><h2 id="三、最后">三、最后</h2><p>日日夜夜的劳作只为你可以更快乐</p><p>嘛咪嘛咪哄~bug通通不见了!</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vuejs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Vue2笔记</title>
       <link href="/posts/9ae38eea.html"/>
       <url>/posts/9ae38eea.html</url>
@@ -317,9 +342,9 @@
       
         <tags>
             
-            <tag> 哔哔 </tag>
-            
             <tag> memos </tag>
+            
+            <tag> 哔哔 </tag>
             
             <tag> 清单 </tag>
             
@@ -932,11 +957,11 @@
       
         <tags>
             
+            <tag> idea </tag>
+            
             <tag> pycharm </tag>
             
             <tag> 猜拳游戏 </tag>
-            
-            <tag> idea </tag>
             
         </tags>
       
