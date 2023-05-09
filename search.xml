@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Vue3组件之间的数据共享</title>
+      <link href="/posts/f8f8cbb6.html"/>
+      <url>/posts/f8f8cbb6.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-组件之间的关系">1. 组件之间的关系</h2><p>在项目开发中，组件之间的关系分为如下3种：</p><ol><li>父子关系</li><li>兄弟关系</li><li>后代关系</li></ol><p><img src="https://img.777nx.cn/test/image-20230509215311561.png" alt=""></p><h2 id="2-父子组件之间的数据共享">2. 父子组件之间的数据共享</h2><p>父子组件之间的数据共享又分为：</p><ol><li><code>父 -&gt; 子</code>共享数据</li><li><code>子 -&gt; 父</code>共享数据</li><li><code>父 &lt;-&gt; 子</code>双向数据同步</li></ol><h3 id="2-1-父组件向子组件共享数据">2.1 父组件向子组件共享数据</h3><p>父组件通过<code>v-bind属性绑定</code>向子组件共享数据。同时，子组件需要使用<code>props</code>接收数据。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509215706903.png" alt="image-20230509215706903"></p><h3 id="2-2-子组件向父组件共享数据">2.2 子组件向父组件共享数据</h3><p>子组件通过<code>自定义事件</code>的方式向父组件共享数据。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509215742232.png" alt="image-20230509215742232"></p><h3 id="2-3-父子组件之间数据的双向同步">2.3 父子组件之间数据的双向同步</h3><p>父组件在使用子组件期间，可以使用<code>v-model指令</code>维护组件内外数据的双向同步：</p><p><img src="https://img.777nx.cn/test/image-20230509215830222.png" alt="image-20230509215830222"></p><h2 id="3-兄弟组件之间的数据共享">3. 兄弟组件之间的数据共享</h2><p><code>兄弟组件之间</code>实现数据共享的方案是<code>EventBus</code>。可以借助于第三方的包<code>mitt</code>来创建 <code>eventBus对象</code>，从而实现兄弟组件之间的数据共享。示意图如下：</p><p><img src="https://img.777nx.cn/test/image-20230509215948200.png" alt="image-20230509215948200"></p><h3 id="3-1-安装-mitt-依赖包">3.1 安装 mitt 依赖包</h3><p>在项目中运行如下的命令，安装mitt依赖包：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mitt@2.1.0</span><br></pre></td></tr></table></figure><h3 id="3-2-创建公共的EventBus模块">3.2 创建公共的EventBus模块</h3><p>在项目中创建公共的<code>eventBus模块</code>如下：</p><p><img src="https://img.777nx.cn/test/image-20230509220134562.png" alt="image-20230509220134562"></p><h3 id="3-3-在数据接收方自定义事件">3.3 在<code>数据接收方</code>自定义事件</h3><p>在数据接收方，调用<code>bus.on</code>(‘事件名称’, 事件处理函数)方法<code>注册一个自定义事件</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509220251394.png" alt="image-20230509220251394"></p><h3 id="3-4-在数据接发送方触发事件">3.4 在<code>数据接发送方</code>触发事件</h3><p>在数据发送方，调用<code>bus.emit</code>(‘事件名称’, 要发送的数据)方法<code>触发自定义事件</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509220330547.png" alt="image-20230509220330547"></p><h2 id="4-后代关系组件之间的数据共享">4. 后代关系组件之间的数据共享</h2><p>后代关系组件之间共享数据，指的是<code>父节点的组件</code>向其<code>子孙组件</code>共享数据。此时组件之间的嵌套关系比较复杂，可以使用<code>provide</code>和<code>inject</code>实现后代关系组件之间的数据共享。</p><p><img src="https://img.777nx.cn/test/image-20230509220415962.png" alt="image-20230509220415962"></p><h3 id="4-1-父节点通过provide共享数据">4.1 父节点通过<code>provide</code>共享数据</h3><p>父节点的组件可以通过<code>provide方法</code>，对其<code>子孙组件</code>共享数据：</p><p><img src="https://img.777nx.cn/test/image-20230509221324505.png" alt="image-20230509221324505"></p><h3 id="4-2-子孙节点通过inject接收数据">4.2 子孙节点通过<code>inject</code>接收数据</h3><p>子孙节点可以使用<code>inject</code>数组，接收父级节点<code>向下共享的数据</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509221413094.png" alt="image-20230509221413094"></p><h3 id="4-3-父节点对外共享响应式的数据">4.3 父节点对外共享<code>响应式的数据</code></h3><p>父节点使用provide向下共享数据时，可以结合<code>computed函数</code>向下共享<code>响应式的数据</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509221523077.png" alt="image-20230509221523077"></p><h3 id="4-4-子孙节点使用响应式的数据">4.4 子孙节点<code>使用</code>响应式的数据</h3><p>如果父级节点共享的是<code>响应式的数据</code>，则子孙节点必须以<code>.value</code>的形式进行使用。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230509221603596.png" alt="image-20230509221603596"></p><h2 id="5-vuex">5. vuex</h2><p>vuex是<code>终极的</code>组件之间的数据共享方案。在企业级的vue项目开发中，vuex可以让组件之间的数据共享变得<code>高效</code>、<code>清晰</code>、且<code>易于维护</code>。</p><p><img src="https://img.777nx.cn/test/image-20230509221832242.png" alt="image-20230509221832242"></p><h2 id="6-总结">6. 总结</h2><ul><li><p>父子关系</p><ol><li>父 -&gt; 子 <code>属性绑定</code></li><li>子 -&gt; 父 <code>事件绑定</code></li><li>父 &lt;-&gt; 子 <code>组件上的v-model</code></li></ol></li><li><p>兄弟关系<br>4. <code>EventBus</code></p></li><li><p>后代关系<br>5. <code>provide</code>&amp;<code>inject</code></p></li><li><p>全局数据共享<br>6. <code>vuex</code></p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL命令</title>
       <link href="/posts/1069a098.html"/>
       <url>/posts/1069a098.html</url>
@@ -142,6 +167,12 @@
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> 时光 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -291,9 +322,9 @@
       
         <tags>
             
-            <tag> hexo </tag>
-            
             <tag> butterfly </tag>
+            
+            <tag> hexo </tag>
             
         </tags>
       
@@ -418,9 +449,9 @@
       
         <tags>
             
-            <tag> butterfly </tag>
-            
             <tag> Hexo </tag>
+            
+            <tag> butterfly </tag>
             
         </tags>
       
@@ -506,11 +537,11 @@
     
     
     <entry>
-      <title>Vue组件之间的数据共享</title>
+      <title>Vue2组件之间的数据共享</title>
       <link href="/posts/6eed640.html"/>
       <url>/posts/6eed640.html</url>
       
-        <content type="html"><![CDATA[<h2 id="组件之间的数据共享">组件之间的数据共享</h2><p>在项目开发中，组件之间的最常见的关系分为如下两种：</p><ol><li>父子关系</li><li>兄弟关系</li></ol><h2 id="父子组件之间的数据共享">父子组件之间的数据共享</h2><p>父子组件之间的数据共享又分为：</p><ol><li>父 -&gt; 子共享数据</li><li>子 -&gt; 父共享数据</li></ol><h3 id="1-父组件向子组件共享数据">1. 父组件向子组件共享数据</h3><p>父组件向子组件共享数据需要使用<code>自定义属性</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230307165111225.png" alt="image-20230307165111225"></p><h3 id="2-子组件向父组件共享数据">2. 子组件向父组件共享数据</h3><p>子组件向父组件共享数据使用<code>自定义事件</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230307165125231.png" alt="image-20230307165125231"></p><h3 id="3-兄弟组件之间的数据共享">3. 兄弟组件之间的数据共享</h3><p>在 <code>vue2.x</code> 中，兄弟组件之间数据共享的方案是 <code>EventBus</code>。</p><p><img src="https://img.777nx.cn/test/image-20230307165219105.png" alt="image-20230307165219105"></p><p><strong>EventBus 的使用步骤</strong></p><ol><li>创建 <code>eventBus.js</code> 模块，并向外共享一个 <code>Vue 的实例对象</code></li><li>在数据<code>发送方</code>，调用 <code>bus.$emit</code>(‘事件名称’, 要发送的数据) 方法<code>触发自定义事件</code></li><li>在数据<code>接收方</code>，调用 <code>bus.$on</code>(‘事件名称’, 事件处理函数) 方法<code>注册一个自定义事件</code></li></ol>]]></content>
+        <content type="html"><![CDATA[<h2 id="1-组件之间的数据共享">1. 组件之间的数据共享</h2><p>在项目开发中，组件之间的关系分为如下两种：</p><ol><li>父子关系</li><li>兄弟关系</li></ol><h2 id="2-父子组件之间的数据共享">2. 父子组件之间的数据共享</h2><p>父子组件之间的数据共享又分为：</p><ol><li>父 -&gt; 子共享数据</li><li>子 -&gt; 父共享数据</li></ol><h3 id="2-1-父组件向子组件共享数据">2.1 父组件向子组件共享数据</h3><p>父组件向子组件共享数据需要使用<code>自定义属性</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230307165111225.png" alt="image-20230307165111225"></p><h3 id="2-2-子组件向父组件共享数据">2.2 子组件向父组件共享数据</h3><p>子组件向父组件共享数据使用<code>自定义事件</code>。示例代码如下：</p><p><img src="https://img.777nx.cn/test/image-20230307165125231.png" alt="image-20230307165125231"></p><h3 id="2-3-兄弟组件之间的数据共享">2.3 兄弟组件之间的数据共享</h3><p>在 <code>vue2.x</code> 中，兄弟组件之间数据共享的方案是 <code>EventBus</code>。</p><p><img src="https://img.777nx.cn/test/image-20230307165219105.png" alt="image-20230307165219105"></p><p><strong>EventBus 的使用步骤</strong></p><ol><li>创建 <code>eventBus.js</code> 模块，并向外共享一个 <code>Vue 的实例对象</code></li><li>在数据<code>发送方</code>，调用 <code>bus.$emit</code>(‘事件名称’, 要发送的数据) 方法<code>触发自定义事件</code></li><li>在数据<code>接收方</code>，调用 <code>bus.$on</code>(‘事件名称’, 事件处理函数) 方法<code>注册一个自定义事件</code></li></ol>]]></content>
       
       
       <categories>
@@ -676,9 +707,9 @@
       
         <tags>
             
-            <tag> butterfly </tag>
-            
             <tag> Hexo </tag>
+            
+            <tag> butterfly </tag>
             
         </tags>
       
