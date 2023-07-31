@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>拥有一台服务器可以做些什么</title>
+      <link href="/posts/da292a82.html"/>
+      <url>/posts/da292a82.html</url>
+      
+        <content type="html"><![CDATA[<p>上大学时候，买了自己的第一台服务器在阿里云上，好好折腾折腾，接下来就说一下有一台服务器能干啥，不然太亏了</p><ol><li>可以搭建一些学习环境，比如说数据库，gitlab什么的</li><li>不用再自己本地在折腾虚拟机VMware，virtualbox啥的，解放自己的电脑。有什么需求，比如说学习linux命令，玩玩docker啥的，都可以在服务器上玩，随便折腾</li><li>跑脚本，可以ssh到服务器上，新建一些定时脚本，比如说给钉钉群里放个机器人，推送到钉钉群或者别的OA做备忘。</li><li>做网站。可以做一个自己的博客网站，外贸网站，壁纸网站，图床，各种网站，只要你想，网上都有很多开源免费，且很简单的模板。</li><li>如果你的服务器在海外，你可以搭XXX，就可以XXX</li><li>可以搭游戏私服，比如我的世界</li><li>可以搭建自己的网盘</li></ol><p>能做的事情还是很多的，我自己日常就是混迹github，找一些比较有趣的开源项目，支持docker部署的话，我就会拉下来体验一下。欢迎各位交流，压榨服务器，争取少亏点😂</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 服务器 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HTML进阶</title>
       <link href="/posts/4f026a62.html"/>
       <url>/posts/4f026a62.html</url>
