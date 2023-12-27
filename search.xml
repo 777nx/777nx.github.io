@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>Redis下载和安装（Windows系统）</title>
+      <link href="/posts/ba26833c.html"/>
+      <url>/posts/ba26833c.html</url>
+      
+        <content type="html"><![CDATA[<p>虽然 Redis 官方网站没有提供 Windows 版的安装包，但是，微软开发并维护了针对Win64的Windows版本。下载地址：<a href="https://github.com/MicrosoftArchive/redis/releases">点击前往</a>。</p><p>同时提供蓝奏云网盘下载地址：<a href="https://777nx.lanzouu.com/ikPVk1j2azoh">点击前往</a></p><p>在 Windows 系统下安装 Redis 要比 Linux 系统安装稍微复杂一些，本节详细介绍如何在 Windows 系统上如何安装 Redis。</p><p>打开上述的下载链接，Redis 支持 32 位和 64 位的 Window 系统，大家根据个人情况自行下载，如图所示：</p><p><img src="https://img.777nx.cn/test/image-20231227010909061.png" alt="image-20231227010909061"></p><p>下载完成后，打开相应的文件夹，您会看到如下图所示的文件目录：</p><p><img src="https://img.777nx.cn/test/image-20231227011529705.png" alt="image-20231227011529705"></p><h2 id="创建Redis临时服务">创建Redis临时服务</h2><h3 id="启动服务端程序">启动服务端程序</h3><p>打开 CMD 命令进入 Redis 目录，执行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\Redis-x64-3.0.504&gt;redis-server.exe redis.windows.conf</span><br></pre></td></tr></table></figure><p>显示如下图所示，表示 Redis 服务已启动</p><p><img src="https://img.777nx.cn/test/image-20231227012517726.png" alt="image-20231227012517726"></p><p>上图中显示一些 Redis 的相关信息，比如 Redis 的版本号以及默认端口号(6379)。注意，为了实现后续操作，请您保持服务端开启状态，否则客户端无法正常工作。</p><h3 id="启动客户端程序">启动客户端程序</h3><p>启动服务端后，后台窗口不要关，新开一个 CMD 窗口，执行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\Redis-x64-3.0.504&gt;redis-cli.exe</span><br></pre></td></tr></table></figure><p><img src="https://img.777nx.cn/test/image-20231227012824451.png" alt="image-20231227012824451"></p><p>得到如上界面，说明 Redis 本地客户端与服务端连接成功。</p><h2 id="命令创建Redis服务">命令创建Redis服务</h2><p>上述方式虽然简单快捷，但是显然不是程序员的操作，下面介绍，通过命令启动 Redis 服务端，并将 Redis 服务添加到 Windows 资源管理器，实现开机后自动启动。</p><h3 id="注册Redis服务">注册Redis服务</h3><p>通过 CMD 命令行工具进入 Redis 安装目录，将 Redis 服务注册到 Windows 服务中，执行以下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server.exe --service-install redis.windows.conf</span><br></pre></td></tr></table></figure><p>执行完后，得到以下输出，说明注册成功。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1868] 07 Jan 15:00:08.223 <span class="comment"># Granting read/write access to &#x27;NT AUTHORITY\NetworkService&#x27; on: &quot;D:\software\Redis-x64-3.0.504&quot; &quot;D:\software\Redis-x64-3.0.504\&quot;</span></span><br><span class="line">[1868] 07 Jan 15:00:08.230 <span class="comment"># Redis successfully installed as a service.</span></span><br></pre></td></tr></table></figure><h3 id="启动Redis服务">启动Redis服务</h3><p>执行以下命令启动 Redis 服务，命令如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server --service-start</span><br></pre></td></tr></table></figure><p>如下图所示：</p><p><img src="https://img.777nx.cn/test/image-20231227014937687.png" alt="image-20231227014937687"></p><p>注意：此时 Redis 已经被添加到 Windows 服务中，因此不会再显示 Redis 服务端的相应的信息，如下图所示：</p><p><img src="https://img.777nx.cn/test/image-20231227013740690.png" alt="image-20231227013740690"></p><h3 id="启动Redis客户端">启动Redis客户端</h3><p>在 CMD 命令行输出 redis-cli 命令启动客户端，如下所示：</p><p><img src="https://img.777nx.cn/test/image-20231227013916687.png" alt="image-20231227013916687"></p><h3 id="检查是否连接成功">检查是否连接成功</h3><p>测试客户端和服务端是否成功连接。输出<code>PING</code>命令，若返回<code>PONG</code>则证明成功连接。如下所示：</p><p><img src="https://img.777nx.cn/test/image-20231227014031257.png" alt="image-20231227014031257"></p><p>通过上面的操作，我们完成了 Redis 的安装。当然，您也可以将 Redis 加入到环境变量中，如下所示：</p><p><img src="https://img.777nx.cn/test/image-20231227014226734.png" alt="image-20231227014226734"></p><blockquote><p>注意：根据自己的安装路径添加环境变量。</p></blockquote><h2 id="参考">参考</h2><ol><li><a href="https://c.biancheng.net/redis/windows-installer.html">Redis下载和安装（Windows系统）</a></li><li><a href="https://blog.csdn.net/antma/article/details/79225084">Redis安装（Windows环境下Redis安装）</a></li></ol><h2 id="总结">总结</h2><p>下面对安装过程中涉及到的命令进行总结，主要包括以下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装服务：redis-server.exe --service-install</span><br><span class="line">卸载服务：redis-server.exe --service-uninstall</span><br><span class="line">开启服务：redis-server.exe --service-start</span><br><span class="line">停止服务：redis-server.exe --service-stop</span><br><span class="line">服务端启动时重命名：redis-server.exe --service-start --service-name Redis1</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>12月才开始专插本晚吗？</title>
+      <link href="/posts/89c48741.html"/>
+      <url>/posts/89c48741.html</url>
+      
+        <content type="html"><![CDATA[<div id="countdown"></div><h2 id="12月才开始专插本晚吗">12月才开始专插本晚吗?</h2><p>一点都不晚！很多人都是利于短期的记忆去备考上岸的，有些人不适合战线拉太长，拖着拖着可能就会开始摆烂状态，所以现在开始插本一点都不晚！</p><h3 id="英语：">英语：</h3><p>尽早开始尽早背，英语词汇靠积累，一蹴而就是不可能的，背单词和语法的重要性我觉得是3:2，词汇量决定所有题目的阅读速度，而语法更多体现在语法填空，完型多多少少带一点，刷真题，梳理每种题型的解题思路，找到自己的做题方法才是关键，作文我是背模板提高的，学習的苐一步就是模仿，背得多了，了解各种题型和英语表达的顺序，自然也能自己写作文了，注意，字体写工整！</p><h3 id="专业课：">专业课：</h3><p>不管是什么专业都可以按照这个备考思路：跟着💻课过一遍书上全部的内容，每天定量刷题，今日事今日毕，错题当天就要刷新记忆，记正确答案，再结合教材查缺补漏，扫盲知识点，最后刷错题，把对应的考点和知识点抄在笔记本上，考前专注看错题本和笔记本就够了，能省很多时间</p><h3 id="政治：">政治：</h3><p>回归课本(两本书)每天学习1章，与重点笔记一起看，做好章节巩固练习，4周完成，熟记政治90条知识点(每天读一遍)，过完书之后，100道大题，每天一章，23年时政热点+习题(最后5天刷)，考前一周一套历年真题试卷(近10年的真题都刷一遍)</p><h2 id="心态">心态</h2><ol><li>摆烂了怎么办<br>就算有一时的摆烂，也不要责怪自己，人之常情也给自己两分钟深呼吸，忘掉过去，然后继续学习</li><li>成绩上不去怎么办<br>很努力，但是成绩一直上不去，特别焦虑怎么办心态放松，你只是学习的方法不对，尝试换一种方法学</li><li>压力太大怎么办？<br>无限内耗只会加重拖延和焦虑，可以去找你自己喜欢的放松方式，可以冥想一会，让自己的大脑放空，听音乐，总之这些都是不错的选择</li></ol><h2 id="备考材料：">备考材料：</h2><p>英语：3500词汇，核心1000词，18个语法思维导图，阅读理解，完形填空，语法填空100道，作文模板，近年真题<br>政治：两本书重点笔记，思维导图，90条知识点，100道大题，近年真题，时政热点</p><script>    // 设置专插本考试日期    var targetDate = new Date('March 30, 2024 00:00:00').getTime();    // 更新倒计时的函数    function updateCountdown() {        var currentDate = new Date().getTime();        var timeRemaining = targetDate - currentDate;            // 计算时、分、秒        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));            // 更新页面上的倒计时        document.getElementById('countdown').innerHTML = `离24普通专升本考试还剩${days}天。`            // 如果考试日期已过，显示提示信息        if (timeRemaining < 0) {            document.getElementById('countdown').innerHTML = '考试已经开始';        }    }        // 每秒更新一次倒计时    setInterval(updateCountdown, 1000);        // 初始化页面加载时的倒计时    updateCountdown();</script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 生活趣闻 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 专插本 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JavaScript常用数组方法</title>
       <link href="/posts/d1397e67.html"/>
       <url>/posts/d1397e67.html</url>
