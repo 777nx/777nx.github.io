@@ -29,31 +29,6 @@
     
     
     <entry>
-      <title>12月才开始专插本晚吗？</title>
-      <link href="/posts/89c48741.html"/>
-      <url>/posts/89c48741.html</url>
-      
-        <content type="html"><![CDATA[<div id="countdown"></div><h2 id="12月才开始专插本晚吗">12月才开始专插本晚吗?</h2><p>一点都不晚！很多人都是利于短期的记忆去备考上岸的，有些人不适合战线拉太长，拖着拖着可能就会开始摆烂状态，所以现在开始插本一点都不晚！</p><h3 id="英语：">英语：</h3><p>尽早开始尽早背，英语词汇靠积累，一蹴而就是不可能的，背单词和语法的重要性我觉得是3:2，词汇量决定所有题目的阅读速度，而语法更多体现在语法填空，完型多多少少带一点，刷真题，梳理每种题型的解题思路，找到自己的做题方法才是关键，作文我是背模板提高的，学習的苐一步就是模仿，背得多了，了解各种题型和英语表达的顺序，自然也能自己写作文了，注意，字体写工整！</p><h3 id="专业课：">专业课：</h3><p>不管是什么专业都可以按照这个备考思路：跟着💻课过一遍书上全部的内容，每天定量刷题，今日事今日毕，错题当天就要刷新记忆，记正确答案，再结合教材查缺补漏，扫盲知识点，最后刷错题，把对应的考点和知识点抄在笔记本上，考前专注看错题本和笔记本就够了，能省很多时间</p><h3 id="政治：">政治：</h3><p>回归课本(两本书)每天学习1章，与重点笔记一起看，做好章节巩固练习，4周完成，熟记政治90条知识点(每天读一遍)，过完书之后，100道大题，每天一章，23年时政热点+习题(最后5天刷)，考前一周一套历年真题试卷(近10年的真题都刷一遍)</p><h2 id="心态">心态</h2><ol><li>摆烂了怎么办<br>就算有一时的摆烂，也不要责怪自己，人之常情也给自己两分钟深呼吸，忘掉过去，然后继续学习</li><li>成绩上不去怎么办<br>很努力，但是成绩一直上不去，特别焦虑怎么办心态放松，你只是学习的方法不对，尝试换一种方法学</li><li>压力太大怎么办？<br>无限内耗只会加重拖延和焦虑，可以去找你自己喜欢的放松方式，可以冥想一会，让自己的大脑放空，听音乐，总之这些都是不错的选择</li></ol><h2 id="备考材料：">备考材料：</h2><p>英语：3500词汇，核心1000词，18个语法思维导图，阅读理解，完形填空，语法填空100道，作文模板，近年真题<br>政治：两本书重点笔记，思维导图，90条知识点，100道大题，近年真题，时政热点</p><script>    // 设置专插本考试日期    var targetDate = new Date('March 30, 2024 00:00:00').getTime();    // 更新倒计时的函数    function updateCountdown() {        var currentDate = new Date().getTime();        var timeRemaining = targetDate - currentDate;            // 计算时、分、秒        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));            // 更新页面上的倒计时        document.getElementById('countdown').innerHTML = `离24普通专升本考试还剩${days}天。`            // 如果考试日期已过，显示提示信息        if (timeRemaining < 0) {            document.getElementById('countdown').innerHTML = '考试已经开始';        }    }        // 每秒更新一次倒计时    setInterval(updateCountdown, 1000);        // 初始化页面加载时的倒计时    updateCountdown();</script>]]></content>
-      
-      
-      <categories>
-          
-          <category> 生活趣闻 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 专插本 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>JavaScript常用数组方法</title>
       <link href="/posts/d1397e67.html"/>
       <url>/posts/d1397e67.html</url>
