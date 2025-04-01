@@ -1407,31 +1407,6 @@
     
     
     <entry>
-      <title>里程碑达成，10000次浏览</title>
-      <link href="/posts/5f6deee1.html"/>
-      <url>/posts/5f6deee1.html</url>
-      
-        <content type="html"><![CDATA[<h1>里程牌达成，10000次浏览</h1><p>时间过得真快，<br>一晃就来到了2022年的最后一天。<br>很遗憾，今年没有什么拿得出手的成绩。<br>如果非要说点什么的话，我倒有一份独享的里程牌式成就。<br>现在很骄傲地与你一起分享。</p><h2 id="1-10000浏览">1. 10000浏览</h2><p>这个里程碑式成就，就是：<br>自Fantasy的技术小站建站以来，博客文章的浏览量已经超过了10000次浏览。<br><img src="https://img.777nx.cn/%E5%8D%9A%E5%AE%A2/%E9%87%8C%E7%A8%8B%E7%A2%91%E8%BE%BE%E6%88%90%EF%BC%8C10000%E6%B5%8F%E8%A7%88/Snipaste_2022-12-31_19-31-00.png" alt=""></p><p>这个数据算多吗？</p><p>在中国这种人口量级的国家，任何一个热点新闻，又或者抖音爆款视频，浏览器都是1亿起步的。</p><p>我这还不到1/10000，何况前后我还用了半年时间，这个数据可以说是“无足轻重”。</p><p>但就我个人来说，我很满意，这是一份很不错的成绩。</p><p>我让更多的人加入了博客阵营。</p><p><strong>值得骄傲，值得炫耀。</strong></p><h2 id="2-十年之约">2. 十年之约</h2><p>我是在2021年12月份接触博客的，博客初期没有在意过文章内容，只是一味地寻找友情链接进行交换提高所谓的权重和知名度来满足自己的虚荣心。也正是这样误打误撞的点进了“十年之约”这个浪漫的联盟，被那句“即从加入这个活动起，我们的博客十年不关闭，保持更新和活力！”的slogan所吸引。</p><p>我高兴的点击了申请，在提交后故事就这样的开始了。</p><p><strong>望走出半生，归来仍是少年</strong></p><h2 id="3-捣鼓最新">3. 捣鼓最新</h2><p>在2022年的最后一天</p><p>我再次捣鼓了所有站点，站点再一次进化，也算是给了2022年一个交代。</p><ul><li><p><a href="https://www.777nx.cn/">Fantasy的技术小站</a>，由原来的<code>bolo</code>改成<code>hexo</code>，写一写 Markdown 文件然后直接推送到 github 仓库就会全自动部署，网站就可以将笔记渲染成十分好看的网页和布局，这种自动化部署和精美的页面是一种能让人十分愉快的体验 (当然前期得折腾很多东西啦😏)。</p></li><li><p><a href="https://vip.777nx.cn/">斯莱特林魔法学院</a>，增加了QQ登录和微信登录，同时设置了服务号推送，并且每天60秒读懂世界</p></li></ul><p><img src="https://img.777nx.cn/%E5%8D%9A%E5%AE%A2/%E9%87%8C%E7%A8%8B%E7%A2%91%E8%BE%BE%E6%88%90%EF%BC%8C10000%E6%B5%8F%E8%A7%88/Snipaste_2022-12-31_20-02-57.png" alt=""></p><p><img src="https://img.777nx.cn/%E5%8D%9A%E5%AE%A2/%E9%87%8C%E7%A8%8B%E7%A2%91%E8%BE%BE%E6%88%90%EF%BC%8C10000%E6%B5%8F%E8%A7%88/Snipaste_2022-12-31_20-21-47.png" alt=""></p><ul><li><a href="https://blue.777nx.cn/">爱情小站</a>，为网站添加灯笼</li></ul><p><img src="https://img.777nx.cn/%E5%8D%9A%E5%AE%A2/%E9%87%8C%E7%A8%8B%E7%A2%91%E8%BE%BE%E6%88%90%EF%BC%8C10000%E6%B5%8F%E8%A7%88/Snipaste_2022-12-31_20-11-00.png" alt=""></p><h2 id="4-遇到个女孩">4. 遇到个女孩</h2><p>今年没什么好事，就是遇到了个女孩子，动了想和她一辈子在一起的念头，她的出现让我放下以前，我很想一直陪着她</p><p><img src="https://image.777nx.cn/usr/uploads/2022/11/mmexport1664705720689.jpg" alt=""></p><p><img src="https://image.777nx.cn/usr/uploads/2022/11/3326814596.jpg" alt=""></p><h2 id="5-结尾">5. 结尾</h2><p>2023！</p><p>保持热爱，奔赴下一场山海。</p><p>我已经在期待100000次浏览了</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 生活趣闻 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 里程碑 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>瑞吉外卖项目剩余功能补充</title>
       <link href="/posts/a1e1aa91.html"/>
       <url>/posts/a1e1aa91.html</url>
@@ -1448,9 +1423,9 @@
       
         <tags>
             
-            <tag> MySQL </tag>
-            
             <tag> idea </tag>
+            
+            <tag> MySQL </tag>
             
             <tag> Spring Boot </tag>
             
