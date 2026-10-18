@@ -1,0 +1,6 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://www.777nx.cn/sitemap.xml
+Sitemap: https://www.777nx.cn/baidusitemap.xml
