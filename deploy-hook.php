@@ -119,7 +119,8 @@ try {
             'git remote set-url origin ' . escapeshellarg(PAGES_REMOTE),
             'git fetch --prune origin',
             'git reset --hard ' . escapeshellarg('origin/' . PAGES_BRANCH),
-            'git clean -fd',
+            // 宝塔会生成带不可删属性的 .user.ini，clean 必须排除，否则 exit 1
+            'git clean -fd -e .user.ini',
             'git rev-parse --short HEAD',
         ];
         $failed = false;
