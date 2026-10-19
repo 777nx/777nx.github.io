@@ -1,10 +1,15 @@
 <?php
 /**
- * 宝塔主站 Webhook：校验令牌后，将本目录（站点根）同步为 GitHub Pages 产物仓最新 main。
+ * 宝塔主站 Webhook：校验令牌后，将本目录（站点根）同步为 GitHub Pages 产物仓最新 main，
+ * 并在国内机房主动推送 baidu_urls.txt 到百度（失败不阻断部署）。
  *
- * 密钥文件（按优先级尝试；须落在 PHP open_basedir 内）：
- *   1) /home/hexo-deploy/webhook_secret  （推荐：宝塔 open_basedir 加上此目录）
- *   2) /tmp/hexo-deploy-webhook_secret   （兼容默认 open_basedir=/home/hexo/:/tmp/）
+ * 部署令牌（按优先级尝试；须落在 PHP open_basedir 内）：
+ *   1) /home/hexo-deploy/webhook_secret
+ *   2) /tmp/hexo-deploy-webhook_secret
+ *
+ * 百度推送 token（同上优先级）：
+ *   1) /home/hexo-deploy/baidu_token
+ *   2) /tmp/hexo-deploy-baidu_token
  *
  * 首次初始化与权限说明：tools/baota/README.md
  */
@@ -18,6 +23,12 @@ const SECRET_CANDIDATES = [
     '/home/hexo-deploy/webhook_secret',
     '/tmp/hexo-deploy-webhook_secret',
 ];
+const BAIDU_TOKEN_CANDIDATES = [
+    '/home/hexo-deploy/baidu_token',
+    '/tmp/hexo-deploy-baidu_token',
+];
+const BAIDU_SITE = 'https://www.777nx.cn';
+const BAIDU_URLS_FILE = SITE_ROOT . '/baidu_urls.txt';
 const LOCK_FILE = '/tmp/hexo-deploy.lock';
 const PAGES_REMOTE = 'https://github.com/777nx/777nx.github.io.git';
 const PAGES_BRANCH = 'main';
@@ -31,25 +42,32 @@ function json_out(int $code, array $payload): void
     exit;
 }
 
-function read_secret(): string
+/** @param list<string> $candidates */
+function read_first_file(array $candidates): ?string
 {
-    $tried = [];
-    foreach (SECRET_CANDIDATES as $path) {
-        $tried[] = $path;
-        // open_basedir 超限时 is_readable 会报警；用 @ 并靠后续错误信息提示
+    foreach ($candidates as $path) {
         if (@is_readable($path)) {
-            $secret = trim((string) file_get_contents($path));
-            if ($secret !== '') {
-                return $secret;
+            $value = trim((string) file_get_contents($path));
+            if ($value !== '') {
+                return $value;
             }
         }
     }
-    json_out(500, [
-        'ok' => false,
-        'error' => 'secret_missing',
-        'hint' => '在宝塔为站点 open_basedir 增加 /home/hexo-deploy/，或把密钥写入 /tmp/hexo-deploy-webhook_secret',
-        'tried' => $tried,
-    ]);
+    return null;
+}
+
+function read_secret(): string
+{
+    $secret = read_first_file(SECRET_CANDIDATES);
+    if ($secret === null) {
+        json_out(500, [
+            'ok' => false,
+            'error' => 'secret_missing',
+            'hint' => '在宝塔为站点 open_basedir 增加 /home/hexo-deploy/，或把密钥写入 /tmp/hexo-deploy-webhook_secret',
+            'tried' => SECRET_CANDIDATES,
+        ]);
+    }
+    return $secret;
 }
 
 function run_cmd(string $cmd, string $cwd): array
@@ -73,6 +91,82 @@ function run_cmd(string $cmd, string $cwd): array
         'code' => $code,
         'out' => trim((string) $out),
         'err' => trim((string) $err),
+    ];
+}
+
+/**
+ * 用国内服务器 IP 推送最新链接；失败只记入返回字段，不让整次部署变红。
+ *
+ * @return array<string, mixed>
+ */
+function submit_baidu(): array
+{
+    if (!is_readable(BAIDU_URLS_FILE)) {
+        return ['ok' => false, 'error' => 'urls_missing', 'path' => BAIDU_URLS_FILE];
+    }
+    $urls = trim((string) file_get_contents(BAIDU_URLS_FILE));
+    if ($urls === '') {
+        return ['ok' => false, 'error' => 'urls_empty'];
+    }
+
+    $baiduToken = read_first_file(BAIDU_TOKEN_CANDIDATES);
+    if ($baiduToken === null) {
+        return [
+            'ok' => false,
+            'error' => 'token_missing',
+            'hint' => '写入 /home/hexo-deploy/baidu_token 或 /tmp/hexo-deploy-baidu_token（与 _config.yml baidu_url_submit.token 相同）',
+            'tried' => BAIDU_TOKEN_CANDIDATES,
+        ];
+    }
+
+    $api = 'http://data.zz.baidu.com/urls?site=' . rawurlencode(BAIDU_SITE)
+        . '&token=' . rawurlencode($baiduToken);
+
+    if (function_exists('curl_init')) {
+        $ch = curl_init($api);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $urls,
+            CURLOPT_HTTPHEADER => ['Content-Type: text/plain'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT => 30,
+        ]);
+        $body = curl_exec($ch);
+        $errno = curl_errno($ch);
+        $error = curl_error($ch);
+        $http = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($errno !== 0) {
+            return ['ok' => false, 'error' => 'curl_failed', 'detail' => $error];
+        }
+        $decoded = json_decode((string) $body, true);
+        return [
+            'ok' => $http === 200 && is_array($decoded) && !isset($decoded['error']),
+            'http' => $http,
+            'response' => $decoded !== null ? $decoded : $body,
+            'url_count' => substr_count($urls, "\n") + 1,
+        ];
+    }
+
+    $ctx = stream_context_create([
+        'http' => [
+            'method' => 'POST',
+            'header' => "Content-Type: text/plain\r\n",
+            'content' => $urls,
+            'timeout' => 30,
+            'ignore_errors' => true,
+        ],
+    ]);
+    $body = @file_get_contents($api, false, $ctx);
+    if ($body === false) {
+        return ['ok' => false, 'error' => 'http_failed'];
+    }
+    $decoded = json_decode($body, true);
+    return [
+        'ok' => is_array($decoded) && !isset($decoded['error']),
+        'response' => $decoded !== null ? $decoded : $body,
+        'url_count' => substr_count($urls, "\n") + 1,
     ];
 }
 
@@ -163,10 +257,13 @@ if (!$ok) {
     ]);
 }
 
+$baidu = submit_baidu();
+
 json_out(200, [
     'ok' => true,
     'head' => $head,
     'branch' => PAGES_BRANCH,
     'source_sha' => $payload['source_sha'] ?? null,
     'run_id' => $payload['run_id'] ?? null,
+    'baidu' => $baidu,
 ]);
