@@ -2,8 +2,9 @@
 /**
  * 宝塔主站 Webhook：校验令牌后，将本目录（站点根）同步为 GitHub Pages 产物仓最新 main。
  *
- * 密钥文件（勿放进站点目录，避免 git clean 删掉）：
- *   /home/hexo-deploy/webhook_secret
+ * 密钥文件（按优先级尝试；须落在 PHP open_basedir 内）：
+ *   1) /home/hexo-deploy/webhook_secret  （推荐：宝塔 open_basedir 加上此目录）
+ *   2) /tmp/hexo-deploy-webhook_secret   （兼容默认 open_basedir=/home/hexo/:/tmp/）
  *
  * 首次初始化与权限说明：tools/baota/README.md
  */
@@ -13,8 +14,11 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
 const SITE_ROOT = '/home/hexo';
-const SECRET_FILE = '/home/hexo-deploy/webhook_secret';
-const LOCK_FILE = '/home/hexo-deploy/deploy.lock';
+const SECRET_CANDIDATES = [
+    '/home/hexo-deploy/webhook_secret',
+    '/tmp/hexo-deploy-webhook_secret',
+];
+const LOCK_FILE = '/tmp/hexo-deploy.lock';
 const PAGES_REMOTE = 'https://github.com/777nx/777nx.github.io.git';
 const PAGES_BRANCH = 'main';
 const MAX_ATTEMPTS = 5;
@@ -29,14 +33,23 @@ function json_out(int $code, array $payload): void
 
 function read_secret(): string
 {
-    if (!is_readable(SECRET_FILE)) {
-        json_out(500, ['ok' => false, 'error' => 'secret_missing', 'hint' => SECRET_FILE]);
+    $tried = [];
+    foreach (SECRET_CANDIDATES as $path) {
+        $tried[] = $path;
+        // open_basedir 超限时 is_readable 会报警；用 @ 并靠后续错误信息提示
+        if (@is_readable($path)) {
+            $secret = trim((string) file_get_contents($path));
+            if ($secret !== '') {
+                return $secret;
+            }
+        }
     }
-    $secret = trim((string) file_get_contents(SECRET_FILE));
-    if ($secret === '') {
-        json_out(500, ['ok' => false, 'error' => 'secret_empty']);
-    }
-    return $secret;
+    json_out(500, [
+        'ok' => false,
+        'error' => 'secret_missing',
+        'hint' => '在宝塔为站点 open_basedir 增加 /home/hexo-deploy/，或把密钥写入 /tmp/hexo-deploy-webhook_secret',
+        'tried' => $tried,
+    ]);
 }
 
 function run_cmd(string $cmd, string $cwd): array
@@ -81,14 +94,9 @@ if (!is_dir(SITE_ROOT . '/.git')) {
     ]);
 }
 
-$lockDir = dirname(LOCK_FILE);
-if (!is_dir($lockDir) && !mkdir($lockDir, 0750, true) && !is_dir($lockDir)) {
-    json_out(500, ['ok' => false, 'error' => 'lock_dir_unwritable', 'hint' => $lockDir]);
-}
-
 $lock = fopen(LOCK_FILE, 'c+');
 if ($lock === false) {
-    json_out(500, ['ok' => false, 'error' => 'lock_open_failed']);
+    json_out(500, ['ok' => false, 'error' => 'lock_open_failed', 'hint' => LOCK_FILE]);
 }
 if (!flock($lock, LOCK_EX | LOCK_NB)) {
     fclose($lock);
