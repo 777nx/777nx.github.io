@@ -27,7 +27,8 @@ const BAIDU_TOKEN_CANDIDATES = [
     '/home/hexo-deploy/baidu_token',
     '/tmp/hexo-deploy-baidu_token',
 ];
-const BAIDU_SITE = 'https://www.777nx.cn';
+// 百度后台示例常带 https://，实际 API 的 site 不能带协议，否则 site init fail
+const BAIDU_SITE = 'www.777nx.cn';
 const BAIDU_URLS_FILE = SITE_ROOT . '/baidu_urls.txt';
 const LOCK_FILE = '/tmp/hexo-deploy.lock';
 const PAGES_REMOTE = 'https://github.com/777nx/777nx.github.io.git';
