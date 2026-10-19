@@ -10,8 +10,6 @@
  * 百度推送 token（同上优先级）：
  *   1) /home/hexo-deploy/baidu_token
  *   2) /tmp/hexo-deploy-baidu_token
- *
- * 首次初始化与权限说明：tools/baota/README.md
  */
 declare(strict_types=1);
 
@@ -115,7 +113,7 @@ function submit_baidu(): array
         return [
             'ok' => false,
             'error' => 'token_missing',
-            'hint' => '写入 /home/hexo-deploy/baidu_token 或 /tmp/hexo-deploy-baidu_token（与 _config.yml baidu_url_submit.token 相同）',
+            'hint' => '写入 /home/hexo-deploy/baidu_token 或 /tmp/hexo-deploy-baidu_token',
             'tried' => BAIDU_TOKEN_CANDIDATES,
         ];
     }
@@ -185,7 +183,7 @@ if (!is_dir(SITE_ROOT . '/.git')) {
     json_out(500, [
         'ok' => false,
         'error' => 'site_not_git_repo',
-        'hint' => '按 tools/baota/README.md 将 /home/hexo 初始化为 777nx.github.io 的 clone',
+        'hint' => '将 /home/hexo 初始化为 777nx.github.io 的 git clone（需含 .git）',
     ]);
 }
 
